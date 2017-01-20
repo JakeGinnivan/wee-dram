@@ -1,8 +1,15 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import App from './App'
+import { mount } from 'enzyme'
+import fetchMock from 'fetch-mock'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<App />, div)
+function wait(timeout) {
+  return new Promise(resolve => setTimeout(resolve, timeout))
+}
+
+it('can search for whisky', async () => {
+  fetchMock.catch(500)
+  fetchMock.get('http://localhost:3001/whiskys?q=glen', [
+    {"id":99901,"name":"Glenmorangie Signet","region":""}
+  ])
 })

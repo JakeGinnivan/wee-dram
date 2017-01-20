@@ -55,7 +55,7 @@ class App extends Component {
                 <div>
                   {this.state.searchResults.map(r => (
                       <div key={r.id}>
-                        {r.name}
+                        <span>{r.name}</span>
                         <button type="button" onClick={this.checkin}>Check in</button>
                     </div>
                   ))}

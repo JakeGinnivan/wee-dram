@@ -17,6 +17,7 @@
     "node-inspector": "^0.12.8",
     "nodemon": "^1.11.0",
     "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "sqlite3": "^3.1.8",
     "supertest": "^2.0.1"
