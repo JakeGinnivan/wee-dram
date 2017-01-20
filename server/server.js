@@ -5,9 +5,13 @@ var bodyParser = require('body-parser')
 var db = require('./db')
 
 var server = express()
+var databaseToUse
 
 module.exports = server
 
+server.useDb = function(db) {
+    databaseToUse = db
+}
 // Middleware
 server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -21,7 +25,7 @@ server.use(bodyParser.urlencoded({ extended: true }))
 server.get('/whiskys', function(req, res) {
     var search = req.query.q
 
-    db.getWhiskys(search)
+    db.getWhiskys(search, databaseToUse)
         .then(function (whiskys) {
             console.log(whiskys)
 

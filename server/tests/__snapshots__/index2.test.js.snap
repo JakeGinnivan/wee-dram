@@ -1,0 +1,9 @@
+exports[`Server should return all whiskys when getWhiskys is called 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "Bruichladdich Octomore 6.1",
+    "region": "Islay",
+  },
+]
+`;
