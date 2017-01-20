@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
 import './App.css'
 import { searchWhiskys } from './api'
+import { searchLatest } from './utils/searchLatest'
 
 class App extends Component {
     state = {
       searching: false,
       searchTerm: '',
       searchResults: []
+    }
+
+    constructor(props) {
+        super(props)
+
+        this.autoSearcher = searchLatest((results) => {
+            this.setState({
+                searching: false,
+                searchResults: results
+            })
+        })
     }
 
     search = () => {
@@ -20,7 +32,9 @@ class App extends Component {
     }
 
     searchChanged = (e) => {
-      this.setState({ searchTerm: e.target.value })
+        const searchTerm = e.target.value
+        this.setState({ searchTerm })
+        this.autoSearcher.searchTermChanged(searchTerm)
     }
 
     checkin = (id) => {

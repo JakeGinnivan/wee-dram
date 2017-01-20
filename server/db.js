@@ -10,7 +10,9 @@ module.exports = {
 function getWhiskys (search, testDb) {
   // Use a test database if one is passed in, or the connection defined above.
   var db = testDb || connection
-  return db('whisky').where('name', 'like', '%' + search + '%').select()
+  return db('whisky')
+    .whereRaw("LOWER(name) LIKE '%' || LOWER(?) || '%' ", search) 
+    .select()
 }
 
 function getWhisky (id, testDb) {
