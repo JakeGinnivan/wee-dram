@@ -6,13 +6,31 @@
     "react-scripts": "0.8.5"
   },
   "dependencies": {
+    "body-parser": "^1.16.0",
+    "concurrently": "^3.1.0",
+    "enzyme": "^2.7.0",
+    "express": "^4.14.0",
+    "fetch-mock": "^5.8.1",
+    "intercept-stdout": "^0.1.2",
+    "isomorphic-fetch": "^2.2.1",
+    "knex": "^0.12.6",
+    "node-inspector": "^0.12.8",
+    "nodemon": "^1.11.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "sqlite3": "^3.1.8",
+    "supertest": "^2.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "concurrently \"npm run start:client\" \"npm run dev:server\"",
+    "start:client": "react-scripts start",
+    "build:client": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "knex:migrate": "knex migrate:latest --cwd server/",
+    "knex:seed": "knex seed:run --cwd server/",
+    "dev:server": "nodemon server/",
+    "start:server": "node server/index.js",
+    "debug:server": "node-debug server/index.js"
   }
 }
