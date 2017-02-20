@@ -1,65 +1,45 @@
 import React, { Component } from 'react'
 import './App.css'
-import { searchWhiskys } from './api'
-import { searchLatest } from './utils/searchLatest'
+import { checkin } from './api'
+import Checkin from './components/CheckIn'
+import Checkins from './components/Checkins'
+import Search from './components/Search'
 
 class App extends Component {
     state = {
-      searching: false,
-      searchTerm: '',
-      searchResults: []
+      checkingIn: undefined
     }
 
-    constructor(props) {
-        super(props)
+    checkin = (whisky) => {
+        this.setState({ checkingIn: whisky })
+    }
 
-        this.autoSearcher = searchLatest((results) => {
-            this.setState({
-                searching: false,
-                searchResults: results
-            })
+    completeCheckin = (details) => {
+        checkin(this.state.checkingIn.id, details)
+        this.setState({
+            checkingIn: undefined
         })
     }
 
-    search = () => {
-      this.setState({ searching: true, searchResults: [] })
-      searchWhiskys(this.state.searchTerm)
-        .then(results => this.setState({
-            searching: false,
-            searchResults: results
-        }))
-        .catch(err => this.setState({ searching: false }))
-    }
-
-    searchChanged = (e) => {
-        const searchTerm = e.target.value
-        this.setState({ searchTerm })
-        this.autoSearcher.searchTermChanged(searchTerm)
-    }
-
-    checkin = (id) => {
-
-    }
-
     render() {
+        let content
+
+        if (this.state.checkingIn) {
+            content = <Checkin whisky={this.state.checkingIn} checkin={this.completeCheckin} />
+        } else if (this.state.tab === "my-checkins") {
+            content = <Checkins />
+        } else {
+            content = <Search checkin={this.checkin} />
+        }
+
         return (
             <div className="App">
                 <div>
-                    <h1>Find your whisky to check-in</h1>
-                    <label htmlFor="searchBox">Search: </label>
-                    <input
-                        type="text" id="searchBox" disabled={this.state.searching}
-                        onChange={this.searchChanged} value={this.state.searchTerm} />
-                    <button type="button" onClick={this.search} disabled={this.state.searching}>Search</button>
+                    <a onClick={() => this.setState({ tab: "checkin", checkingIn: undefined })}>Checkin</a>
+                    {' | '}
+                    <a onClick={() => this.setState({ tab: "my-checkins", checkingIn: undefined })}>My Checkins</a>
                 </div>
-                <div>
-                  {this.state.searchResults.map(r => (
-                      <div key={r.id}>
-                        <span>{r.name}</span>
-                        <button type="button" onClick={this.checkin}>Check in</button>
-                    </div>
-                  ))}
-                </div>
+                {content}
             </div>
         )
     }

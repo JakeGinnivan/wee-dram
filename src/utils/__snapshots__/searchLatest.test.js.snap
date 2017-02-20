@@ -1,0 +1,9 @@
+exports[`test it searches after timeout 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "Glenmorangie Signet",
+    "region": "",
+  },
+]
+`;

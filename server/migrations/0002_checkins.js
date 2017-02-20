@@ -2,7 +2,9 @@ exports.up = function (knex, Promise) {
   return knex.schema.createTable('checkin', function (table) {
     table.increments('id').primary()
     table.string('whisky_id')
-    table.integer('rating')
+    table.integer('with_water_rating')
+    table.integer('without_water_rating')
+    table.integer('comment')
   })
 }
 

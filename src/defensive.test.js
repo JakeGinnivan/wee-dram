@@ -24,15 +24,17 @@ afterEach(function () {
 })
 
 it('can search for whisky', async () => {
+  // Arrange
   fetchMock.get('http://localhost:3001/whiskys?q=glen', [
     {"id":99901,"name":"Glenmorangie Signet","region":""}
   ])
-    const app = mount(<App />)
+  const app = mount(<App />)
   
+  // Act
   const input = app.find('#searchBox')
   input.simulate('change', { target: { value: 'glenm' }})
-
   await wait(800)
 
-  // expect(app.find('span').text()).toBe('Glenmorangie Signet')
+  // Assert
+  expect(app.find('span').text()).toBe('Glenmorangie Signet')
 })

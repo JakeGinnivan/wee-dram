@@ -17,3 +17,18 @@ export const searchWhiskys = (search) => {
         .then(checkStatus)
         .then(parseJSON)
 }
+export const checkin = (whiskyId, details) => {
+    return fetch(`http://localhost:3001/checkins`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ whiskyId, ...details })
+    }).then(checkStatus)
+}
+
+export const getCheckins = () => {
+    return fetch(`http://localhost:3001/checkins`)
+        .then(checkStatus)
+        .then(parseJSON)
+}

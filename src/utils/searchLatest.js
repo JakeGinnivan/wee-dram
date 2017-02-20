@@ -1,6 +1,4 @@
-import { searchWhiskys } from '../api'
-
-export const searchLatest = (haveResults) => {
+export const searchLatest = (haveResults, performSearch) => {
     let currentSearchTerm
 
     return {
@@ -9,7 +7,7 @@ export const searchLatest = (haveResults) => {
 
             setTimeout(() => {
                 if (currentSearchTerm === searchTerm) {
-                    searchWhiskys(searchTerm).then(r => {
+                    performSearch(searchTerm).then(r => {
                         if (currentSearchTerm === searchTerm) {
                             haveResults(r)
                         }
